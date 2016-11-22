@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "refine <- read.csv(\"~/Dropbox/Springboard Foundations/DataCleaning 1/refine.csv\")\n\n#Standardize Brand Name, all lower case and philips, akzo, van houten, and unilever\n\nrefine$company <- tolower(refine$company)\n\nrefine$company <- str_replace_all(refine$company, \".*p.*\", \"phillips\")\nrefine$company <- str_replace_all(refine$company, \".*f.*\", \"phillips\")\nrefine$company <- str_replace_all(refine$company, \".*k.*\", \"akzo\")\nrefine$company <- str_replace_all(refine$company, \".*ten.*\", \"van houten\")\nrefine$company <- str_replace_all(refine$company, \".*ver.*\", \"unilever\")\n\n#separate prwoduct code and product number into two columns\n\nrefine <- separate(refine, Product.code...number, c(\"product_code\", \"product_number\"), sep = \"-\")\n\n#add product categories p = Smartphone, v = TV, x = Laptop,\tq = Tablet\n\nrefine$product_cat <- refine$product_code\n\nrefine$product_cat <- str_replace_all(refine$product_cat, \".*p.*\", \"Smartphone\")\nrefine$product_cat <- str_replace_all(refine$product_cat, \".*v.*\", \"TV\")\nrefine$product_cat <- str_replace_all(refine$product_cat, \".*x.*\", \"Laptop\")\nrefine$product_cat <- str_replace_all(refine$product_cat, \".*q.*\", \"Tablet\")\n\n#Add full address column\nrefine <- unite(refine, full_address, address, city, country, sep = \", \", remove = FALSE)\n\n#Add binary columns for data analysis.  \n#company: company_philips, company_akzo, company_van_houten and company_unilever\n#product category: product_smartphone, product_tv, product_laptop and product_tablet\n\nrefine$company_philips <- refine$company\nrefine$company_akzo <- refine$company\nrefine$company_van_houton <- refine$company\nrefine$company_unilever <- refine$company\n\nrefine$product_smartphone <- refine$product_code\nrefine$product_tv <- refine$product_code\nrefine$product_laptop <- refine$product_code\nrefine$product_tablet <- refine$product_code\n\n#company\n\nfor(i in 1:nrow(refine)){\n  if (identical(refine$company_philips[i], \"phillips\") == TRUE){\n    refine$company_philips[i] <- \"1\"\n  }else{\n    refine$company_philips[i] <- \"0\"\n  }\n}\n\nfor(i in 1:nrow(refine)){\n  if (identical(refine$company_akzo[i], \"akzo\") == TRUE){\n    refine$company_akzo[i] <- \"1\"\n  }else{\n    refine$company_akzo[i] <- \"0\"\n  }\n}\n\nfor(i in 1:nrow(refine)){\n  if (identical(refine$company_van_houton[i], \"van houton\") == TRUE){\n    refine$company_van_houton[i] <- \"1\"\n  }else{\n    refine$company_van_houton[i] <- \"0\"\n  }\n}\n\nfor(i in 1:nrow(refine)){\n  if (identical(refine$company_unilever[i], \"unilever\") == TRUE){\n    refine$company_unilever[i] <- \"1\"\n  }else{\n    refine$company_unilever[i] <- \"0\"\n  }\n}\n\n\n#prod cat\nfor(i in 1:nrow(refine)){\nif (identical(refine$product_smartphone[i], \"p\") == TRUE){\n  refine$product_smartphone[i] <- \"1\"\n}else{\n  refine$product_smartphone[i] <- \"0\"\n}\n}\n\nfor(i in 1:nrow(refine)){\n  if (identical(refine$product_tv[i], \"v\") == TRUE){\n    refine$product_tv[i] <- \"1\"\n  }else{\n    refine$product_tv[i] <- \"0\"\n  }\n}\n\nfor(i in 1:nrow(refine)){\n  if (identical(refine$product_laptop[i], \"x\") == TRUE){\n    refine$product_laptop[i] <- \"1\"\n  }else{\n    refine$product_laptop[i] <- \"0\"\n  }\n}\n\nfor(i in 1:nrow(refine)){\n  if (identical(refine$product_tablet[i], \"q\") == TRUE){\n    refine$product_tablet[i] <- \"1\"\n  }else{\n    refine$product_tablet[i] <- \"0\"\n  }\n}\n\nwrite.csv(refine, file = \"refine_clean.csv\")\n\n\n",
+    "created" : 1479501470616.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3199371525",
+    "id" : "FB09B46F",
+    "lastKnownWriteTime" : 1479832030,
+    "last_content_update" : 1479832030349,
+    "path" : "~/Dropbox/Springboard Foundations/DataCleaning 1/DW1_Refine_Prod_List.R",
+    "project_path" : "DW1_Refine_Prod_List.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
